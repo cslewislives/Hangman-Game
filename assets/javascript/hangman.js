@@ -6,9 +6,9 @@ console.log(alphArr);
 var words = ["Harry", "Ron", "Hermione", "Ginny", 
 "Malfoy", "Dumbledore", "Hagrid", "Gryffindor", 
 "Hufflepuff", "Ravenclaw", "Slytherin", "Hogwarts"];
-var sorted = [];
-    for (var k = 0; k < words.length; k++) {
-        sorted[k] = words[k].toUpperCase();
+var sorted = []; //turn all words in the array into uppercase
+    for (var i = 0; i < words.length; i++) {
+        sorted[i] = words[i].toUpperCase();
     }
     console.log(sorted);
 var lives = 13;
@@ -16,7 +16,7 @@ var wins = 0;
 var chosenWord = sorted[Math.floor(Math.random() * sorted.length)];
     console.log(chosenWord);
 var spaces = [];
-    for (var i = 0; i < chosenWord.length; i++) { //Creating the correct amount of spaces for the chosen word
+    for (var j = 0; j < chosenWord.length; j++) { //Creating the correct amount of spaces for the chosen word
         spaces += " _ ";
     }
 var guesses = [ ]; //empty array for storing user guesses
@@ -40,7 +40,6 @@ document.onkeyup = function(event) {
 
     var userGuess = event.key.toUpperCase();
     console.log(chosenWord.indexOf(userGuess))
-    // return userGuess;
     //check for valid letter
     // if (alphArr.indexOf(userGuess) == -1) {
     //     return false;
@@ -50,17 +49,18 @@ document.onkeyup = function(event) {
     //user inputs letters and we need to store the guesses
     
     //If Letter is correct {
-    for (i = 0; i < chosenWord.length; i++) {
-        if (userGuess === chosenWord[i]) {
-            guesses[i] = userGuess;
-
-        } 
-    }
+        if (chosenWord.indexOf(userGuess) != -1) {
+            for (k = 0; k < chosenWord.length; k++) {
+                if (userGuess === chosenWord[k]) {
+                    guesses[k] = userGuess;
+                } 
+            }
+        }
+        else if (chosenWord.indexOf(userGuess) == -1) {
+            document.getElementById("lives").innerHTML ="Guesses Remaining: " + --lives;
+        }
     console.log(guesses);
     //replace space with the letter
-    if (chosenWord.indexOf(userGuess) === -1) {
-        lives--;
-    }
     //Else {
         //lose a life
         //show incorrect guess
