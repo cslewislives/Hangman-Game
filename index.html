@@ -2,21 +2,57 @@
 <html lang="en">
 
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Hangman</title>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="refresh" content="3" > -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Harry Potter Hangman</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="assets/css/style.css">
   </head>
-
+  
   <body>
-      <!-- basic html to set up the page. Bootstrap? probably to have easier functionality. Theme? possibly HP or other nerd things.
-      How many words?-->
-      <!-- What HTML do i need? -->
-      <!-- Title -->
-      <!-- container with the main content -->
+    <!-- basic html to set up the page. Bootstrap? probably to have easier functionality. Theme? possibly HP or other nerd things.
+    How many words?-->
+    <!-- What HTML do i need? -->
+    <!-- Title -->
+    <header>
+      <h1>Harry Potter Hangman</h1>
+    </header>
+    
+    <!-- container with the main content -->
+    <div class="container main-content" id="game">
+      <div class="row">
+        <div class="page-header">
+          <h2 id="word"></h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <img src="https://placehold.it/150x150" alt="..." title="..." id="mainImage">
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+              <h2 id="hide">Press Any Letter to Start!</h2>
+            <h3 id="guesses"></h3>
+          </div>
+          <div class="row">
+            <h4 id="userGuesses"></h4>
+          </div>
+          <br>
+          <div class="row">
+            <h3 id="lives"></h3>
+          </div>
+          <div class="row">
+            <h3 id="wins"></h3>
+          </div>
+        </div>
+      </div>
+    </div> <!-- container close -->
       
-
-
+      
+      
+    <script src="assets/javascript/hangman.js"></script>
   </body>
 
 </html>
