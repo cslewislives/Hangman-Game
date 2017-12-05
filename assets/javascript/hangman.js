@@ -1,5 +1,5 @@
 //declare variables here:
-var alphabet = "abcdefghijklmnopqrstuvwxyz"; // a variable for the guesses so that they are only in the alphabet
+var alphabet = "abcdefghijklmnopqrstuvwxyz"; // Variable storing the alphabet
 var alphArr = alphabet.split("");
 console.log(alphArr);
 //a list of words from the theme for the computer to choose from after getting started.
@@ -15,12 +15,12 @@ var lives = 13;
 var wins = 0;
 var chosenWord = sorted[Math.floor(Math.random() * sorted.length)];
     console.log(chosenWord);
-var spaces = "";
-var guesses = [ ];
+var spaces = [];
+    for (var i = 0; i < chosenWord.length; i++) { //Creating the correct amount of spaces for the chosen word
+        spaces += " _ ";
+    }
+var guesses = [ ]; //empty array for storing user guesses
 
-for (i=0; i < chosenWord.length; i++) {
-    spaces += " _ ";
-}
 //display the number of spaces for chosen word
 document.getElementById('word').innerHTML = "<h2>" + spaces + "</h2>";
 console.log(spaces);
@@ -40,20 +40,27 @@ document.onkeyup = function(event) {
 
     var userGuess = event.key.toUpperCase();
     console.log(chosenWord.indexOf(userGuess))
-    return userGuess;
+    // return userGuess;
     //check for valid letter
-    if (alphArr.indexOf(userGuess) == -1) {
-        return false;
-    }
-    console.log(alphArr.indexOf(userGuess));
+    // if (alphArr.indexOf(userGuess) == -1) {
+    //     return false;
+    // }
+    // console.log(alphArr.indexOf(userGuess));
     
     //user inputs letters and we need to store the guesses
     
     //If Letter is correct {
-        
-            //replace space with the letter
-         
-        //}
+    for (i = 0; i < chosenWord.length; i++) {
+        if (userGuess === chosenWord[i]) {
+            guesses[i] = userGuess;
+
+        } 
+    }
+    console.log(guesses);
+    //replace space with the letter
+    if (chosenWord.indexOf(userGuess) === -1) {
+        lives--;
+    }
     //Else {
         //lose a life
         //show incorrect guess
