@@ -4,29 +4,28 @@ var alphArr = alphabet.split("");
 console.log(alphArr);
 //a list of words from the theme for the computer to choose from after getting started.
 function chooseWord() {
-
-    var words = [
-        "Harry",
-        "Ron",
-        "Hermione",
-        "Ginny",
-        "Malfoy",
-        "Dumbledore",
-        "Hagrid",
-        "Gryffindor",
-        "Hufflepuff",
-        "Ravenclaw",
-        "Slytherin",
-        "Hogwarts"
-    ];
-    var sorted = []; //turn all words in the array into uppercase
-    for (var i = 0; i < words.length; i++) {
-        sorted[i] = words[i].toUpperCase();
-    }
-    console.log(sorted);
-    chosenWord = sorted[Math.floor(Math.random() * sorted.length)];
-    console.log(chosenWord);
-    length = chosenWord.length;
+  var words = [
+    "Harry",
+    "Ron",
+    "Hermione",
+    "Ginny",
+    "Malfoy",
+    "Dumbledore",
+    "Hagrid",
+    "Gryffindor",
+    "Hufflepuff",
+    "Ravenclaw",
+    "Slytherin",
+    "Hogwarts"
+  ];
+  var sorted = []; //turn all words in the array into uppercase
+  for (var i = 0; i < words.length; i++) {
+    sorted[i] = words[i].toUpperCase();
+  }
+  console.log(sorted);
+  chosenWord = sorted[Math.floor(Math.random() * sorted.length)];
+  console.log(chosenWord);
+  length = chosenWord.length;
 }
 
 chooseWord();
@@ -53,7 +52,6 @@ console.log(spacesLeft);
 //Press any key to get started!
 //replace heading with the spaces of the chosen word
 document.onkeyup = function(event) {
-    
   document.getElementById("hide").style.display = "none";
   document.getElementById("guesses").innerHTML = "Guesses: ";
   document.getElementById("lives").innerHTML = "Guesses Remaining: " + lives;
@@ -95,14 +93,14 @@ document.onkeyup = function(event) {
   }
 
   //show wins count and/or victory screen if word guessed correctly
-  //If word is completed {
+  //If word is completed
   if (remaining === 0) {
     //Show victory Screen
     document.getElementById("victory").style.display = "block";
     document.getElementById("victory").innerHTML = "You've Won the House Cup!";
     //hide wrong guesses
     document.getElementById("guesses").style.display = "none";
-    
+
     document.getElementById("wrongLetters").style.display = "none";
     //update win count
     document.getElementById("wins").innerHTML = "Wins: " + ++wins;
@@ -110,15 +108,14 @@ document.onkeyup = function(event) {
     document.getElementById("lives").style.display = "none";
     document.getElementById("resetButton").style.display = "block";
   } else if (lives === 0) {
-    //give a max try amount until fail.
-    //If last life is lost {
+    //If last life is lost
     //Show failure screen
     document.getElementById("defeat").style.display = "block";
-    
+
     document.getElementById("defeat").innerHTML = "You've Been Cursed!";
     //hide wrong guesses
     document.getElementById("guesses").style.display = "none";
-    
+
     document.getElementById("wrongLetters").style.display = "none";
     //Try Again?
     document.getElementById("lives").style.display = "none";
@@ -131,32 +128,29 @@ guesses = [];
 
 //Reset game
 function reset() {
-    chooseWord();
-    wrong = " ";
-    remaining = length;
-    lives = 7;
-    // guesses = [];
-    spacesLeft = [];
-    for (var j = 0; j < length; j++) {
-        //Creating the correct amount of spaces for the chosen word
-        spacesLeft[j] = " _ ";
-      }
-    document.getElementById("word").innerHTML =
+  chooseWord();
+  wrong = " ";
+  remaining = length;
+  lives = 7;
+  // guesses = [];
+  spacesLeft = [];
+  for (var j = 0; j < length; j++) {
+    //Creating the correct amount of spaces for the chosen word
+    spacesLeft[j] = " _ ";
+  }
+  document.getElementById("word").innerHTML =
     "<h2>" + spacesLeft.join(" ") + "</h2>";
-    document.getElementById("victory").style.display = "none";
-    document.getElementById("defeat").style.display = "none";
-    document.getElementById("wrongLetters").style.display = "block";
-    document.getElementById("wrongLetters").innerHTML = wrong;
-    document.getElementById("guesses").style.display = "block";
-    document.getElementById("lives").style.display = "block";
-    document.getElementById("lives").innerHTML = "Guesses Remaining: " + lives;
-    // document.getElementById("wins").innerHTML = "Wins: " + wins;
-    document.getElementById("resetButton").style.display = "none";
-    return chosenWord;
+  document.getElementById("victory").style.display = "none";
+  document.getElementById("defeat").style.display = "none";
+  document.getElementById("wrongLetters").style.display = "block";
+  document.getElementById("wrongLetters").innerHTML = wrong;
+  document.getElementById("guesses").style.display = "block";
+  document.getElementById("lives").style.display = "block";
+  document.getElementById("lives").innerHTML = "Guesses Remaining: " + lives;
+  // document.getElementById("wins").innerHTML = "Wins: " + wins;
+  document.getElementById("resetButton").style.display = "none";
+  return chosenWord;
 }
 
 var newWord = chosenWord;
 console.log(newWord);
-//If try again {
-//reset the game
-//}
