@@ -15,15 +15,16 @@ var lives = 13;
 var wins = 0;
 var chosenWord = sorted[Math.floor(Math.random() * sorted.length)];
     console.log(chosenWord);
-var spaces = [];
+var spacesLeft = [];
     for (var j = 0; j < chosenWord.length; j++) { //Creating the correct amount of spaces for the chosen word
-        spaces += " _ ";
+        spacesLeft[j] = " _ ";
     }
-var guesses = [ ]; //empty array for storing user guesses
+var wrong = " ";
+// var guesses = [ ]; //empty array for storing user guesses
 
 //display the number of spaces for chosen word
-document.getElementById('word').innerHTML = "<h2>" + spaces + "</h2>";
-console.log(spaces);
+document.getElementById('word').innerHTML = "<h2>" + spacesLeft.join(" ") + "</h2>";
+console.log(spacesLeft);
 
 
 //set a variable for remaining letters
@@ -47,20 +48,24 @@ document.onkeyup = function(event) {
     // console.log(alphArr.indexOf(userGuess));
     
     //user inputs letters and we need to store the guesses
-    
     //If Letter is correct {
         if (chosenWord.indexOf(userGuess) != -1) {
-            for (k = 0; k < chosenWord.length; k++) {
+            for (var k = 0; k < chosenWord.length; k++) {
                 if (userGuess === chosenWord[k]) {
-                    guesses[k] = userGuess;
+                    spacesLeft[k] = userGuess;
+                    //replace space with the letter
+                    document.getElementById('word').innerHTML = "<h2>" + spacesLeft.join(" ") + "</h2>";
+                    // --remaining;
+                    // console.log(remaining);
                 } 
             }
         }
         else if (chosenWord.indexOf(userGuess) == -1) {
+            wrong += userGuess;
+            document.getElementById("wrongLetters").innerHTML = wrong;
             document.getElementById("lives").innerHTML ="Guesses Remaining: " + --lives;
         }
-    console.log(guesses);
-    //replace space with the letter
+    console.log(spacesLeft);
     //Else {
         //lose a life
         //show incorrect guess
