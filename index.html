@@ -32,9 +32,11 @@
           <img src="https://placehold.it/150x150" alt="..." title="..." id="mainImage">
         </div>
         <div class="col-md-6">
-          <div class="row" id="victory">
-              <h2 id="hide">Press Any Letter to Start!</h2>
+          <div class="row">
+            <h2 id="hide">Press Any Letter to Start!</h2>
             <h3 id="guesses"></h3>
+            <h2 id="victory"></h2>
+            <h2 id="defeat"></h2>
           </div>
           <div class="row">
             <h4 id="wrongLetters"></h4>
@@ -42,9 +44,13 @@
           <br>
           <div class="row">
             <h3 id="lives"></h3>
+            <button id="resetButton" style="display: none;" onclick="reset()"><h3>New Word?</h3></button>
           </div>
           <div class="row">
             <h3 id="wins"></h3>
+          </div>
+          <div class="row">
+            <h3 id="losses"></h3>
           </div>
         </div>
       </div>
