@@ -48,15 +48,15 @@ document.onkeyup = function(event) {
     // console.log(alphArr.indexOf(userGuess));
     
     //user inputs letters and we need to store the guesses
-    //If Letter is correct {
+    //If Letter is correct
         if (chosenWord.indexOf(userGuess) != -1) {
             for (var k = 0; k < chosenWord.length; k++) {
                 if (userGuess === chosenWord[k]) {
                     spacesLeft[k] = userGuess;
                     //replace space with the letter
                     document.getElementById('word').innerHTML = "<h2>" + spacesLeft.join(" ") + "</h2>";
-                    // --remaining;
-                    // console.log(remaining);
+                    --remaining;
+                    console.log(remaining);
                 } 
             }
         }
@@ -73,10 +73,14 @@ document.onkeyup = function(event) {
         
     //show wins count and/or victory screen if word guessed correctly
     //If word is completed {
-        //Show victory Screen
-        //Try Again?
-        //update win count
-        //}
+        if (remaining === 0) {
+            //Show victory Screen
+            document.getElementById("victory").innerHTML = "<h2>Congrats!</h2>"
+            //update win count
+            document.getElementById("wins").innerHTML = "Wins: " + ++wins;
+            //Try Again?
+            document.getElementById("lives").innerHTML = "<button>" + "Try Again?" + "</button>";
+        }
         
     //give a max try amount until fail.
     //If last life is lost {
