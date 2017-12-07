@@ -4,7 +4,7 @@ var alphArr = alphabet.split("");
 console.log(alphArr);
 //creating a function to initialize the game settings
 function initialize() {
-    //list of words for comp to choose from
+  //list of words for comp to choose from
   var words = [
     "Harry",
     "Ron",
@@ -21,12 +21,13 @@ function initialize() {
     "Sirius",
     "Lupin"
   ];
-  var sorted = []; //turn all words in the array into uppercase
+  sorted = []; //turn all words in the array into uppercase
   for (var i = 0; i < words.length; i++) {
     sorted[i] = words[i].toUpperCase();
   }
   console.log(sorted);
   chosenWord = sorted[Math.floor(Math.random() * sorted.length)];
+  console.log(sorted.indexOf(chosenWord));
   console.log(chosenWord);
   length = chosenWord.length;
   spacesLeft = [];
@@ -34,15 +35,16 @@ function initialize() {
   guesses = [];
   lives = 7;
   remaining = length;
-  
+
   for (var j = 0; j < length; j++) {
-      //Creating the correct amount of spaces for the chosen word
-      spacesLeft[j] = " _ ";
-    }
-    secretWord = document.getElementById("word");
-    secretWord.innerHTML =
-    "<h2>" + spacesLeft.join(" ") + "</h2>";
+    //Creating the correct amount of spaces for the chosen word
+    spacesLeft[j] = " _ ";
+  }
+  secretWord = document.getElementById("word");
+  secretWord.innerHTML = "<h2>" + spacesLeft.join(" ") + "</h2>";
   console.log(spacesLeft);
+  relatedImg = document.getElementById("mainImage");
+  relatedImg.src = "assets/images/sorting-hat.jpg";
 
   images = [
     "assets/images/Harry.jpg",
@@ -59,11 +61,13 @@ function initialize() {
     "assets/images/Hogwarts-crest.jpg",
     "assets/images/Sirius.jpg",
     "assets/images/Lupin.jpg"
-];
+  ];
+  chosenImg = images[sorted.indexOf(chosenWord)];
 }
 
 initialize();
 var chosenWord;
+var sorted;
 var spacesLeft;
 var wrong;
 var guesses; //empty array for storing user guesses
@@ -84,10 +88,12 @@ var wrongLetters = document.getElementById("wrongLetters");
 var victoryScreen = document.getElementById("victory");
 var defeatScreen = document.getElementById("defeat");
 var resetBtn = document.getElementById("resetButton");
+var chosenImg;
+var relatedImg;
+relatedImg = document.getElementById("mainImage");
 
 
 //display the number of spaces for chosen word
-
 
 //Press any key to get started!
 //replace heading with the spaces of the chosen word
@@ -113,8 +119,7 @@ document.onkeyup = function(event) {
           if (userGuess === chosenWord[l]) {
             spacesLeft[l] = userGuess;
             //replace space with the letter
-            secretWord.innerHTML =
-              "<h2>" + spacesLeft.join(" ") + "</h2>";
+            secretWord.innerHTML = "<h2>" + spacesLeft.join(" ") + "</h2>";
             --remaining;
             console.log("Remaining Letters " + remaining);
           }
@@ -124,8 +129,7 @@ document.onkeyup = function(event) {
         wrong += userGuess + " ";
         wrongLetters.innerHTML = wrong;
         //lose a life
-        livesLeft.innerHTML =
-          "Guesses Remaining: " + --lives;
+        livesLeft.innerHTML = "Guesses Remaining: " + --lives;
       }
       wrongLetters.innerHTML = wrong;
       console.log(spacesLeft);
@@ -147,9 +151,11 @@ document.onkeyup = function(event) {
     //Try Again?
     livesLeft.style.display = "none";
     resetBtn.style.display = "block";
+    relatedImg.src = chosenImg;
   } else if (lives === 0) {
     //If last life is lost
     //Show failure screen
+    secretWord.innerHTML = chosenWord;
     defeatScreen.style.display = "block";
 
     defeatScreen.innerHTML = "You've Been Cursed!";
@@ -161,10 +167,9 @@ document.onkeyup = function(event) {
     livesLeft.style.display = "none";
     resetBtn.style.display = "block";
     totalLosses.innerHTML = "Losses: " + ++losses;
+    relatedImg.src = chosenImg;
   }
 };
-
-
 
 //Reset game
 function reset() {
