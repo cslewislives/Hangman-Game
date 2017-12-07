@@ -7,32 +7,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Harry Potter Hangman</title>
+  <link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
   <link type="text/css" rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
+  <!-- <audio class="hedwigs" src="assets/music/Hedwigs-theme.mp3" type="audio/mpeg" autoplay loop>
+  </audio> -->
+  <!-- <audio class="housecup" src="assets/music/housecup-final.mp3" type="audio/mpeg" preload="auto" readyState>
+  </audio>
+  <audio class="curse" src="assets/music/expelliarmus.mp3" type="audio/mpeg" preload="auto">
+  </audio> -->
   <!-- basic html to set up the page. Bootstrap? probably to have easier functionality. Theme? possibly HP or other nerd things.
     How many words?-->
   <!-- What HTML do i need? -->
   <!-- Title -->
-  <header class="container">
-    <h1 class="text-center">Harry Potter Hangman</h1>
+
+  <header class="page-header">
+    <div class="container">
+      <h1 class="text-center">Harry Potter Hangman</h1>
+    </div>
   </header>
 
   <!-- container with the main content -->
-  <div class="container main-content" id="game">
+  <div class="container" id="game">
     <div class="row">
-      <div class="page-header">
+      <div class="jumbotron word-wrap">
         <h2 class="text-center" id="word"></h2>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6" id="displayImg">
-        <img class="media" src="assets/images/sorting-hat.jpg" alt="..." title="..." id="mainImage">
+      <div class="col-md-5" id="displayImg">
+        <img class="img-responsive" src="assets/images/sorting-hat.jpg" alt="..." title="..." id="mainImage">
       </div>
-      <div class="col-md-6">
+      <div class="col-md-7 text-center main-content">
         <div class="row">
           <h2 id="hide">Press Any Letter to Start!</h2>
           <h3 id="guesses"></h3>
@@ -45,7 +55,7 @@
         <br>
         <div class="row">
           <h3 id="lives"></h3>
-          <button id="resetButton" style="display: none;" onclick="reset()">
+          <button class="center-block" id="resetButton" style="display: none;" onclick="reset()">
             <h3>New Word?</h3>
           </button>
         </div>
@@ -59,6 +69,16 @@
     </div>
   </div>
   <!-- container close -->
+
+  <div class="row">
+
+
+    <div class="footer">
+      <div class="container">
+        &copy; 2017 Josh C.S. Lewis
+      </div>
+    </div>
+  </div>
 
 
 

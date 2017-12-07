@@ -3,6 +3,65 @@ var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Variable storing the alphabet
 var alphArr = alphabet.split("");
 console.log(alphArr);
 //creating a function to initialize the game settings
+initialize();
+var chosenWord;
+var sorted;
+var spacesLeft;
+var wrong;
+var guesses; //empty array for storing user guesses
+var lives;
+var wins = 0;
+var losses = 0;
+var length;
+var remaining;
+console.log("Remaining Letters " + remaining);
+var images;
+var secretWord;
+var startScreen = document.getElementById("hide");
+var guessesHead = document.getElementById("guesses");
+var livesLeft = document.getElementById("lives");
+var totalWins = document.getElementById("wins");
+var totalLosses = document.getElementById("losses");
+var wrongLetters = document.getElementById("wrongLetters");
+var victoryScreen = document.getElementById("victory");
+var defeatScreen = document.getElementById("defeat");
+var resetBtn = document.getElementById("resetButton");
+var chosenImg;
+var relatedImg;
+var backgroundMusic;
+var winSound;
+var loseSound;
+backgroundMusic.play();
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  this.play = function() {
+    this.sound.play();
+  };
+  this.stop = function() {
+    this.sound.pause();
+  };
+  document.body.appendChild(this.sound);
+}
+function backgroundSound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.setAttribute("loop", true);
+  this.sound.volume = 0.3;
+  this.sound.style.display = "none";
+  this.play = function() {
+    this.sound.play();
+  };
+  this.stop = function() {
+    this.sound.pause();
+  };
+  document.body.appendChild(this.sound);
+}
 function initialize() {
   //list of words for comp to choose from
   var words = [
@@ -35,13 +94,13 @@ function initialize() {
   guesses = [];
   lives = 7;
   remaining = length;
-
+  //display the number of spaces for chosen word
   for (var j = 0; j < length; j++) {
     //Creating the correct amount of spaces for the chosen word
     spacesLeft[j] = " _ ";
   }
   secretWord = document.getElementById("word");
-  secretWord.innerHTML = "<h2>" + spacesLeft.join(" ") + "</h2>";
+  secretWord.innerHTML = spacesLeft.join(" ");
   console.log(spacesLeft);
   relatedImg = document.getElementById("mainImage");
   relatedImg.src = "assets/images/sorting-hat.jpg";
@@ -62,117 +121,99 @@ function initialize() {
     "assets/images/Sirius.jpg",
     "assets/images/Lupin.jpg"
   ];
+
   chosenImg = images[sorted.indexOf(chosenWord)];
-}
+  document.onkeyup = true;
+  //   winSound = document.getElementById("housecup");
+  loseSound = document.getElementById("curse");
+  backgroundMusic = new backgroundSound("assets/music/Hedwigs-theme.mp3");
+  winSound = new sound("assets/music/housecup-final.mp3");
+  loseSound = new sound("assets/music/expelliarmus.mp3");
 
-initialize();
-var chosenWord;
-var sorted;
-var spacesLeft;
-var wrong;
-var guesses; //empty array for storing user guesses
-var lives;
-var wins = 0;
-var losses = 0;
-var length;
-var remaining;
-console.log("Remaining Letters " + remaining);
-var images;
-var secretWord;
-var startScreen = document.getElementById("hide");
-var guessesHead = document.getElementById("guesses");
-var livesLeft = document.getElementById("lives");
-var totalWins = document.getElementById("wins");
-var totalLosses = document.getElementById("losses");
-var wrongLetters = document.getElementById("wrongLetters");
-var victoryScreen = document.getElementById("victory");
-var defeatScreen = document.getElementById("defeat");
-var resetBtn = document.getElementById("resetButton");
-var chosenImg;
-var relatedImg;
-relatedImg = document.getElementById("mainImage");
+  //Press any key to get started!
+  //replace heading with the spaces of the chosen word
+  document.onkeyup = function(event) {
+    startScreen.style.display = "none";
+    guessesHead.innerHTML = "Guesses: ";
+    livesLeft.innerHTML = "Guesses Remaining: " + lives;
+    totalWins.innerHTML = "Wins: " + wins;
+    totalLosses.innerHTML = "Losses: " + losses;
 
-
-//display the number of spaces for chosen word
-
-//Press any key to get started!
-//replace heading with the spaces of the chosen word
-document.onkeyup = function(event) {
-  startScreen.style.display = "none";
-  guessesHead.innerHTML = "Guesses: ";
-  livesLeft.innerHTML = "Guesses Remaining: " + lives;
-  totalWins.innerHTML = "Wins: " + wins;
-  totalLosses.innerHTML = "Losses: " + losses;
-
-  var userGuess = event.key.toUpperCase();
-  console.log("chosenWord Index " + chosenWord.indexOf(userGuess));
-  //check for valid letter
-  if (alphArr.indexOf(userGuess) > -1) {
-    //user inputs letters and we need to store the guesses
-    if (guesses.indexOf(userGuess) === -1) {
-      guesses.push(userGuess);
-      console.log("User Guesses " + guesses);
-
-      //If Letter is correct
-      if (chosenWord.indexOf(userGuess) > -1) {
-        for (var l = 0; l < length; l++) {
-          if (userGuess === chosenWord[l]) {
-            spacesLeft[l] = userGuess;
-            //replace space with the letter
-            secretWord.innerHTML = "<h2>" + spacesLeft.join(" ") + "</h2>";
-            --remaining;
-            console.log("Remaining Letters " + remaining);
+    var userGuess = event.key.toUpperCase();
+    console.log("chosenWord Index " + chosenWord.indexOf(userGuess));
+    //check for valid letter
+    if (alphArr.indexOf(userGuess) > -1) {
+      //user inputs letters and we need to store the guesses
+      if (guesses.indexOf(userGuess) === -1) {
+        guesses.push(userGuess);
+        console.log("User Guesses " + guesses);
+        //If Letter is correct
+        if (chosenWord.indexOf(userGuess) > -1) {
+          for (var l = 0; l < length; l++) {
+            if (userGuess === chosenWord[l]) {
+              spacesLeft[l] = userGuess;
+              //replace space with the letter
+              secretWord.innerHTML = spacesLeft.join(" ");
+              --remaining;
+              console.log("Remaining Letters " + remaining);
+            }
           }
+        } else if (chosenWord.indexOf(userGuess) == -1) {
+          //show incorrect guess
+          wrong += userGuess + " ";
+          wrongLetters.innerHTML = wrong;
+          //lose a life
+          livesLeft.innerHTML = "Guesses Remaining: " + --lives;
         }
-      } else if (chosenWord.indexOf(userGuess) == -1) {
-        //show incorrect guess
-        wrong += userGuess + " ";
         wrongLetters.innerHTML = wrong;
-        //lose a life
-        livesLeft.innerHTML = "Guesses Remaining: " + --lives;
+        console.log(spacesLeft);
       }
-      wrongLetters.innerHTML = wrong;
-      console.log(spacesLeft);
+
+      //If word is completed
+      if (remaining === 0) {
+        //Show victory Screen
+        victoryScreen.style.display = "block";
+        victoryScreen.innerHTML = "You've Won the House Cup!";
+        //hide wrong guesses
+        guessesHead.style.display = "none";
+        wrongLetters.style.display = "none";
+        //update win count
+        totalWins.innerHTML = "Wins: " + ++wins;
+        //Try Again?
+        livesLeft.style.display = "none";
+        resetBtn.style.display = "block";
+        relatedImg.src = chosenImg;
+        winSound.play();
+        document.onkeyup = function() {
+          return false;
+        };
+      } else if (lives === 0) {
+        //If last life is lost
+        //Show failure screen
+        secretWord.innerHTML = chosenWord;
+        defeatScreen.style.display = "block";
+        defeatScreen.innerHTML = "You've Been Cursed!";
+        //hide wrong guesses
+        guessesHead.style.display = "none";
+        wrongLetters.style.display = "none";
+        //Try Again?
+        livesLeft.style.display = "none";
+        resetBtn.style.display = "block";
+        totalLosses.innerHTML = "Losses: " + ++losses;
+        relatedImg.src = chosenImg;
+        loseSound.play();
+        document.onkeyup = function() {
+          return false;
+        };
+      }
     }
-  }
-
-  //show wins count and/or victory screen if word guessed correctly
-  //If word is completed
-  if (remaining === 0) {
-    //Show victory Screen
-    victoryScreen.style.display = "block";
-    victoryScreen.innerHTML = "You've Won the House Cup!";
-    //hide wrong guesses
-    guessesHead.style.display = "none";
-
-    wrongLetters.style.display = "none";
-    //update win count
-    totalWins.innerHTML = "Wins: " + ++wins;
-    //Try Again?
-    livesLeft.style.display = "none";
-    resetBtn.style.display = "block";
-    relatedImg.src = chosenImg;
-  } else if (lives === 0) {
-    //If last life is lost
-    //Show failure screen
-    secretWord.innerHTML = chosenWord;
-    defeatScreen.style.display = "block";
-
-    defeatScreen.innerHTML = "You've Been Cursed!";
-    //hide wrong guesses
-    guessesHead.style.display = "none";
-
-    wrongLetters.style.display = "none";
-    //Try Again?
-    livesLeft.style.display = "none";
-    resetBtn.style.display = "block";
-    totalLosses.innerHTML = "Losses: " + ++losses;
-    relatedImg.src = chosenImg;
-  }
-};
+  };
+}
 
 //Reset game
 function reset() {
+  winSound.stop();
+  loseqSound.stop();
   initialize();
   victoryScreen.style.display = "none";
   defeatScreen.style.display = "none";
@@ -181,7 +222,7 @@ function reset() {
   guessesHead.style.display = "block";
   livesLeft.style.display = "block";
   livesLeft.innerHTML = "Guesses Remaining: " + lives;
-  // totalWins.innerHTML = "Wins: " + wins;
+  totalWins.innerHTML = "Wins: " + wins;
   resetBtn.style.display = "none";
   console.log(guesses);
 }
