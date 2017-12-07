@@ -2,8 +2,9 @@
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Variable storing the alphabet
 var alphArr = alphabet.split("");
 console.log(alphArr);
-//a list of words from the theme for the computer to choose from after getting started.
-function chooseWord() {
+//creating a function to initialize the game settings
+function initialize() {
+    //list of words for comp to choose from
   var words = [
     "Harry",
     "Ron",
@@ -16,7 +17,9 @@ function chooseWord() {
     "Hufflepuff",
     "Ravenclaw",
     "Slytherin",
-    "Hogwarts"
+    "Hogwarts",
+    "Sirius",
+    "Lupin"
   ];
   var sorted = []; //turn all words in the array into uppercase
   for (var i = 0; i < words.length; i++) {
@@ -26,37 +29,74 @@ function chooseWord() {
   chosenWord = sorted[Math.floor(Math.random() * sorted.length)];
   console.log(chosenWord);
   length = chosenWord.length;
+  spacesLeft = [];
+  wrong = " ";
+  guesses = [];
+  lives = 7;
+  remaining = length;
+  
+  for (var j = 0; j < length; j++) {
+      //Creating the correct amount of spaces for the chosen word
+      spacesLeft[j] = " _ ";
+    }
+    secretWord = document.getElementById("word");
+    secretWord.innerHTML =
+    "<h2>" + spacesLeft.join(" ") + "</h2>";
+  console.log(spacesLeft);
+
+  images = [
+    "assets/images/Harry.jpg",
+    "assets/images/Ron.jpg",
+    "assets/images/Hermione.jpg",
+    "assets/images/Ginny.jpg",
+    "assets/images/Malfoy.jpg",
+    "assets/images/Dumbeldore.jpg",
+    "assets/images/rubeus-hagrid.jpg",
+    "assets/images/gryffindor.png",
+    "assets/images/hufflepuff.png",
+    "assets/images/ravenclaw.png",
+    "assets/images/slytherin.png",
+    "assets/images/Hogwarts-crest.jpg",
+    "assets/images/Sirius.jpg",
+    "assets/images/Lupin.jpg"
+];
 }
 
-chooseWord();
+initialize();
 var chosenWord;
-var spacesLeft = [];
-var wrong = " ";
-var guesses = []; //empty array for storing user guesses
-var lives = 7;
+var spacesLeft;
+var wrong;
+var guesses; //empty array for storing user guesses
+var lives;
 var wins = 0;
 var losses = 0;
 var length;
-var remaining = length;
+var remaining;
 console.log("Remaining Letters " + remaining);
+var images;
+var secretWord;
+var startScreen = document.getElementById("hide");
+var guessesHead = document.getElementById("guesses");
+var livesLeft = document.getElementById("lives");
+var totalWins = document.getElementById("wins");
+var totalLosses = document.getElementById("losses");
+var wrongLetters = document.getElementById("wrongLetters");
+var victoryScreen = document.getElementById("victory");
+var defeatScreen = document.getElementById("defeat");
+var resetBtn = document.getElementById("resetButton");
 
-for (var j = 0; j < length; j++) {
-  //Creating the correct amount of spaces for the chosen word
-  spacesLeft[j] = " _ ";
-}
+
 //display the number of spaces for chosen word
-document.getElementById("word").innerHTML =
-  "<h2>" + spacesLeft.join(" ") + "</h2>";
-console.log(spacesLeft);
+
 
 //Press any key to get started!
 //replace heading with the spaces of the chosen word
 document.onkeyup = function(event) {
-  document.getElementById("hide").style.display = "none";
-  document.getElementById("guesses").innerHTML = "Guesses: ";
-  document.getElementById("lives").innerHTML = "Guesses Remaining: " + lives;
-  document.getElementById("wins").innerHTML = "Wins: " + wins;
-  document.getElementById("losses").innerHTML = "Losses: " + losses;
+  startScreen.style.display = "none";
+  guessesHead.innerHTML = "Guesses: ";
+  livesLeft.innerHTML = "Guesses Remaining: " + lives;
+  totalWins.innerHTML = "Wins: " + wins;
+  totalLosses.innerHTML = "Losses: " + losses;
 
   var userGuess = event.key.toUpperCase();
   console.log("chosenWord Index " + chosenWord.indexOf(userGuess));
@@ -73,7 +113,7 @@ document.onkeyup = function(event) {
           if (userGuess === chosenWord[l]) {
             spacesLeft[l] = userGuess;
             //replace space with the letter
-            document.getElementById("word").innerHTML =
+            secretWord.innerHTML =
               "<h2>" + spacesLeft.join(" ") + "</h2>";
             --remaining;
             console.log("Remaining Letters " + remaining);
@@ -82,12 +122,12 @@ document.onkeyup = function(event) {
       } else if (chosenWord.indexOf(userGuess) == -1) {
         //show incorrect guess
         wrong += userGuess + " ";
-        document.getElementById("wrongLetters").innerHTML = wrong;
+        wrongLetters.innerHTML = wrong;
         //lose a life
-        document.getElementById("lives").innerHTML =
+        livesLeft.innerHTML =
           "Guesses Remaining: " + --lives;
       }
-      document.getElementById("wrongLetters").innerHTML = wrong;
+      wrongLetters.innerHTML = wrong;
       console.log(spacesLeft);
     }
   }
@@ -96,61 +136,47 @@ document.onkeyup = function(event) {
   //If word is completed
   if (remaining === 0) {
     //Show victory Screen
-    document.getElementById("victory").style.display = "block";
-    document.getElementById("victory").innerHTML = "You've Won the House Cup!";
+    victoryScreen.style.display = "block";
+    victoryScreen.innerHTML = "You've Won the House Cup!";
     //hide wrong guesses
-    document.getElementById("guesses").style.display = "none";
+    guessesHead.style.display = "none";
 
-    document.getElementById("wrongLetters").style.display = "none";
+    wrongLetters.style.display = "none";
     //update win count
-    document.getElementById("wins").innerHTML = "Wins: " + ++wins;
+    totalWins.innerHTML = "Wins: " + ++wins;
     //Try Again?
-    document.getElementById("lives").style.display = "none";
-    document.getElementById("resetButton").style.display = "block";
+    livesLeft.style.display = "none";
+    resetBtn.style.display = "block";
   } else if (lives === 0) {
     //If last life is lost
     //Show failure screen
-    document.getElementById("defeat").style.display = "block";
+    defeatScreen.style.display = "block";
 
-    document.getElementById("defeat").innerHTML = "You've Been Cursed!";
+    defeatScreen.innerHTML = "You've Been Cursed!";
     //hide wrong guesses
-    document.getElementById("guesses").style.display = "none";
+    guessesHead.style.display = "none";
 
-    document.getElementById("wrongLetters").style.display = "none";
+    wrongLetters.style.display = "none";
     //Try Again?
-    document.getElementById("lives").style.display = "none";
-    document.getElementById("resetButton").style.display = "block";
-    document.getElementById("losses").innerHTML = "Losses: " + ++losses;
+    livesLeft.style.display = "none";
+    resetBtn.style.display = "block";
+    totalLosses.innerHTML = "Losses: " + ++losses;
   }
 };
 
-guesses = [];
+
 
 //Reset game
 function reset() {
-  chooseWord();
-  wrong = " ";
-  remaining = length;
-  lives = 7;
-  // guesses = [];
-  spacesLeft = [];
-  for (var j = 0; j < length; j++) {
-    //Creating the correct amount of spaces for the chosen word
-    spacesLeft[j] = " _ ";
-  }
-  document.getElementById("word").innerHTML =
-    "<h2>" + spacesLeft.join(" ") + "</h2>";
-  document.getElementById("victory").style.display = "none";
-  document.getElementById("defeat").style.display = "none";
-  document.getElementById("wrongLetters").style.display = "block";
-  document.getElementById("wrongLetters").innerHTML = wrong;
-  document.getElementById("guesses").style.display = "block";
-  document.getElementById("lives").style.display = "block";
-  document.getElementById("lives").innerHTML = "Guesses Remaining: " + lives;
-  // document.getElementById("wins").innerHTML = "Wins: " + wins;
-  document.getElementById("resetButton").style.display = "none";
-  return chosenWord;
+  initialize();
+  victoryScreen.style.display = "none";
+  defeatScreen.style.display = "none";
+  wrongLetters.style.display = "block";
+  wrongLetters.innerHTML = wrong;
+  guessesHead.style.display = "block";
+  livesLeft.style.display = "block";
+  livesLeft.innerHTML = "Guesses Remaining: " + lives;
+  // totalWins.innerHTML = "Wins: " + wins;
+  resetBtn.style.display = "none";
+  console.log(guesses);
 }
-
-var newWord = chosenWord;
-console.log(newWord);
