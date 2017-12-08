@@ -1,14 +1,15 @@
-//declare variables here:
+//=======================================================
+initialize();
+//declare variables here: 
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Variable storing the alphabet
 var alphArr = alphabet.split("");
-console.log(alphArr);
-//creating a function to initialize the game settings
-initialize();
+    console.log(alphArr);
+//because of how I built my game I had to declare A LOT of variables. Mostly just so my function would work
 var chosenWord;
 var sorted;
 var spacesLeft;
 var wrong;
-var guesses; //empty array for storing user guesses
+var guesses;
 var lives;
 var wins = 0;
 var losses = 0;
@@ -31,7 +32,8 @@ var relatedImg;
 var backgroundMusic;
 var winSound;
 var loseSound;
-backgroundMusic.play();
+//=======================================================
+// I had a hard time getting my audio to work so I created sound object generators that I found via google.
 function sound(src) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
@@ -62,6 +64,11 @@ function backgroundSound(src) {
   };
   document.body.appendChild(this.sound);
 }
+backgroundMusic.play();
+//=======================================================
+
+// Function to initialize the game
+
 function initialize() {
   //list of words for comp to choose from
   var words = [
@@ -102,7 +109,11 @@ function initialize() {
   secretWord = document.getElementById("word");
   secretWord.innerHTML = spacesLeft.join(" ");
   console.log(spacesLeft);
+  //=======================================================
+  // I wanted to add image functionality to the game.
+  // When user wins or loses they see a picture of the word.
   relatedImg = document.getElementById("mainImage");
+  // needed for re-initialize
   relatedImg.src = "assets/images/sorting-hat.jpg";
 
   images = [
@@ -121,18 +132,24 @@ function initialize() {
     "assets/images/Sirius.jpg",
     "assets/images/Lupin.jpg"
   ];
-
+// in order to get the right picture I had to match the index of the pic to the index of the word.
+// I would love to learn if there is a way to do this dynamically
   chosenImg = images[sorted.indexOf(chosenWord)];
-  document.onkeyup = true;
-  //   winSound = document.getElementById("housecup");
-  loseSound = document.getElementById("curse");
+
+  //=======================================================
+  // I also wanted audio functionality.
+  // winSound for victory/loseSound for defeat and background.
   backgroundMusic = new backgroundSound("assets/music/Hedwigs-theme.mp3");
   winSound = new sound("assets/music/housecup-final.mp3");
   loseSound = new sound("assets/music/expelliarmus.mp3");
 
+  //=======================================================
+
+  //Function containing the actual game logic.
+
   //Press any key to get started!
-  //replace heading with the spaces of the chosen word
   document.onkeyup = function(event) {
+    //switches to the info screen
     startScreen.style.display = "none";
     guessesHead.innerHTML = "Guesses: ";
     livesLeft.innerHTML = "Guesses Remaining: " + lives;
@@ -152,20 +169,19 @@ function initialize() {
           for (var l = 0; l < length; l++) {
             if (userGuess === chosenWord[l]) {
               spacesLeft[l] = userGuess;
-              //replace space with the letter
+              //replace space with the letter and lower remaining guesses
               secretWord.innerHTML = spacesLeft.join(" ");
               --remaining;
               console.log("Remaining Letters " + remaining);
             }
           }
-        } else if (chosenWord.indexOf(userGuess) == -1) {
+        } else {
           //show incorrect guess
           wrong += userGuess + " ";
           wrongLetters.innerHTML = wrong;
           //lose a life
           livesLeft.innerHTML = "Guesses Remaining: " + --lives;
         }
-        wrongLetters.innerHTML = wrong;
         console.log(spacesLeft);
       }
 
@@ -182,8 +198,11 @@ function initialize() {
         //Try Again?
         livesLeft.style.display = "none";
         resetBtn.style.display = "block";
+        // display related image
         relatedImg.src = chosenImg;
+        // play winning sound
         winSound.play();
+        // allow no other input or else win and lose count will keep going up
         document.onkeyup = function() {
           return false;
         };
@@ -200,8 +219,11 @@ function initialize() {
         livesLeft.style.display = "none";
         resetBtn.style.display = "block";
         totalLosses.innerHTML = "Losses: " + ++losses;
+        // show related image
         relatedImg.src = chosenImg;
+        //play losing sound
         loseSound.play();
+        //restrict input
         document.onkeyup = function() {
           return false;
         };
@@ -210,11 +232,15 @@ function initialize() {
   };
 }
 
+
 //Reset game
 function reset() {
+  // quit sounds
   winSound.stop();
-  loseqSound.stop();
+  loseSound.stop();
+  // re-initialize after setting onkeyup to false
   initialize();
+  // return to info screen
   victoryScreen.style.display = "none";
   defeatScreen.style.display = "none";
   wrongLetters.style.display = "block";
@@ -224,5 +250,4 @@ function reset() {
   livesLeft.innerHTML = "Guesses Remaining: " + lives;
   totalWins.innerHTML = "Wins: " + wins;
   resetBtn.style.display = "none";
-  console.log(guesses);
 }
