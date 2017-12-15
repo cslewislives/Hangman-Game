@@ -34,7 +34,7 @@ var winSound;
 var loseSound;
 //=======================================================
 // I had a hard time getting my audio to work so I created sound object generators that I found via google.
-function sound(src) {
+function Sound(src) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
   this.sound.setAttribute("preload", "auto");
@@ -48,7 +48,7 @@ function sound(src) {
   };
   document.body.appendChild(this.sound);
 }
-function backgroundSound(src) {
+function BackgroundSound(src) {
   this.sound = document.createElement("audio");
   this.sound.src = src;
   this.sound.setAttribute("preload", "auto");
@@ -139,9 +139,9 @@ function initialize() {
   //=======================================================
   // I also wanted audio functionality.
   // winSound for victory/loseSound for defeat and background.
-  backgroundMusic = new backgroundSound("assets/music/Hedwigs-theme.mp3");
-  winSound = new sound("assets/music/housecup-final.mp3");
-  loseSound = new sound("assets/music/expelliarmus.mp3");
+  backgroundMusic = new BackgroundSound("assets/music/Hedwigs-theme.mp3");
+  winSound = new Sound("assets/music/housecup-final.mp3");
+  loseSound = new Sound("assets/music/expelliarmus.mp3");
 
   //=======================================================
 
